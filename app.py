@@ -3,11 +3,12 @@ import pandas as pd
 import pydeck as pdk
 import requests
 import math
-from google import genai  # <--- PLACED HERE AT THE TOP OF THE FILE
 
-# ------------------------------------------------------------------
-# 1. GNOSTIC ILLUMINATED DARK THEME CONFIGURATION (CSS)
-# ------------------------------------------------------------------
+try:
+    from google import genai
+    GENAI_AVAILABLE = True
+except ModuleNotFoundError:
+    GENAI_AVAILABLE = False
 st.set_page_config(
     page_title="ERIN: Noospheric Signal Engine",
     page_icon="📜",

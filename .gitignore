@@ -1,0 +1,12 @@
+# Python environment files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+
+# Streamlit config
+.streamlit/

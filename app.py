@@ -4,23 +4,11 @@ import pydeck as pdk
 import requests
 import math
 
-# Safe import block
+# Safe import block: prevents the app from crashing on start if Streamlit Cloud is still caching packages
 try:
     from google import genai
     GENAI_AVAILABLE = True
-except ModuleNotFoundError:
-    GENAI_AVAILABLE = False
-import streamlit as st
-import pandas as pd
-import pydeck as pdk
-import requests
-import math
-
-# Try importing the Google GenAI SDK safely
-try:
-    from google import genai
-    GENAI_AVAILABLE = True
-except ModuleNotFoundError:
+except (ImportError, ModuleNotFoundError):
     GENAI_AVAILABLE = False
 
 # ------------------------------------------------------------------
@@ -106,7 +94,7 @@ with st.sidebar:
             except Exception as e:
                 st.error(f"Initialization Error: {e}")
         else:
-            st.error("The `google-genai` package is installing on Streamlit Cloud. Please reboot your app via Manage App menu.")
+            st.error("The `google-genai` library is not loaded. Please reboot the app using 'Manage app' -> 'Clear cache and reboot'.")
     else:
         st.info("Operating in Rule-Based Fallback Mode. Enter a Gemini API Key above for full generative AI insights.")
 

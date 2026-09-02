@@ -2,4 +2,4 @@ streamlit
 pandas
 pydeck
 requests
-google-generativeai
+google-genai

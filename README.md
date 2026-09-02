@@ -4,13 +4,14 @@
 
 ---
 
-## 🌟 Key Conceptual & Technical Features
+## 🌟 Key Features
 
-* **3D Planetary Brain Mapping:** Integrates global geospatial coordinates with neural anatomical hubs (e.g., Americas as Left Brain, Eurasia as Right Brain, and Egypt as the Thalamic Central Relay Node).
-* **Sacred Geometry Engine:** Renders dynamic 3D **Tree of Life** pathways alongside an intersecting, multi-ring **Flower of Life** grid directly aligned over a dark-mode world map via PyDeck.
-* **Expanded Multi-Node Live Telemetry:** Queries the live USGS Earthquake API with selectable global targets, including the Bering Sea Node (Da'at Gate), Egypt Relay Node (Tiphereth), and Jerusalem Node (Kether).
-* **Linguistic Passage & AI Signal Interpreter:** Maps user input strings into Wi-Fi 6 spectrum channels ($C1 \rightarrow C8$), evaluates terminal dynamic states (open `-IN`/`-N` passage vs. closed `-O` boundary), and generates real-time AI-style narrative logs summarizing grid resonance.
-* **Doubled-Fibonacci Harmonic Engine:** Calculates dual counterpart sequences using $F(n) = 2 \cdot \text{FIB}_n$, tracking progression toward a target divine equilibrium of **42**.
+* **3D Planetary Brain Mapping:** Correlates geographic continental masses to neural counterparts (Americas as Left Brain, Eurasia as Right Brain, Egypt as Central Thalamic Relay Node).
+* **Sacred Geometry Engine:** Renders dynamic 3D **Tree of Life** pathways and multi-ring **Flower of Life** overlays over a dark-themed world map via PyDeck.
+* **9-Node Live Telemetry:** Queries the USGS Earthquake API across all 9 Sephirotic global nodes in real time.
+* **Linguistic Passage & AI Interpreter:** Maps word streams into Wi-Fi 6 OFDMA channels ($C1 \rightarrow C8$), evaluates terminal dynamic states (Open Passage vs. Closed Boundary), and outputs dynamic AI insights using Google Gemini.
+* **Interactive AI Chatbot:** Features an integrated sidebar assistant to explain grid telemetry, node functions, and underlying mathematics in real time.
+* **Doubled-Fibonacci Modeler:** Tracks harmonic sequence progression toward the target divine equilibrium of **42**.
 
 ---
 
@@ -19,7 +20,7 @@
 ```text
 erin-noospheric-engine/
 │
-├── app.py             # Main Streamlit & PyDeck application (Updated with Multi-Node Telemetry & AI Interpreter)
+├── app.py             # Main Streamlit & PyDeck application
 ├── requirements.txt   # Python package dependencies
 ├── .gitignore         # Version control exclusion rules
-└── README.md          # Repository documentation
+└── README.md          # Project documentation

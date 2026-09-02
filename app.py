@@ -3,7 +3,7 @@ import pandas as pd
 import pydeck as pdk
 import requests
 import math
-import google.generativeai as genai
+from google import genai  # <--- PLACED HERE AT THE TOP OF THE FILE
 
 # ------------------------------------------------------------------
 # 1. GNOSTIC ILLUMINATED DARK THEME CONFIGURATION (CSS)
@@ -75,13 +75,17 @@ st.markdown("""
 # ------------------------------------------------------------------
 with st.sidebar:
     st.header("🔮 AI Noospheric Interpreter")
-    st.markdown("Connect an API key to enable live conversational explanations of telemetry, sacred geometry, and linguistic signals.")
+    st.markdown("Connect an API key to enable live conversational explanations.")
     
     gemini_api_key = st.text_input("Google Gemini API Key", type="password", help="Get a free key from Google AI Studio")
     
+    client = None
     if gemini_api_key:
-        genai.configure(api_key=gemini_api_key)
-        st.success("AI Neural Link Active")
+        try:
+            client = genai.Client(api_key=gemini_api_key)
+            st.success("AI Neural Link Active")
+        except Exception as e:
+            st.error(f"Initialization Error: {e}")
     else:
         st.info("Operating in Rule-Based Fallback Mode. Enter a Gemini API Key above for full generative AI insights.")
 
@@ -95,15 +99,17 @@ with st.sidebar:
     if st.button("Send Query"):
         if user_query:
             st.session_state.chat_history.append(("User", user_query))
-            if gemini_api_key:
+            if client:
                 try:
-                    model = genai.GenerativeModel('gemini-1.5-flash')
                     prompt = f"""
                     You are ERIN, an AI Noospheric Signal Engine. You interpret planetary geography mapped to human brain anatomy,
                     the Tree of Life, Flower of Life, and telemetry data. Answer the following user question in an authoritative,
                     illuminated, and clear architectural tone: {user_query}
                     """
-                    response = model.generate_content(prompt)
+                    response = client.models.generate_content(
+                        model="gemini-2.5-flash",
+                        contents=prompt
+                    )
                     st.session_state.chat_history.append(("ERIN AI", response.text))
                 except Exception as e:
                     st.session_state.chat_history.append(("ERIN AI", f"Error generating response: {e}"))
@@ -289,11 +295,13 @@ with col2:
             st.warning(f"**Terminal Dynamic:** [{word}] → **NEUTRAL STATE**")
             
         # Generative AI dynamic insight generation
-        if gemini_api_key:
+        if client:
             try:
-                model = genai.GenerativeModel('gemini-1.5-flash')
                 ai_prompt = f"In 2 brief sentences, interpret the word '{word}' assigned to spectrum C{channel} with dynamic '{dynamic}' within a cybernetic noospheric planetary grid context."
-                ai_response = model.generate_content(ai_prompt).text
+                ai_response = client.models.generate_content(
+                    model="gemini-2.5-flash",
+                    contents=ai_prompt
+                ).text
                 st.markdown(f"> **AI Generative Analysis:** *{ai_response}*")
             except Exception:
                 st.markdown(f"> **AI Insight:** *Signal '{word}' resonates as a {dynamic} state across Spectrum Channel C{channel}.*")

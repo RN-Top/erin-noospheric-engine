@@ -4,11 +4,16 @@ import pydeck as pdk
 import requests
 import math
 
+# Try importing the Google GenAI SDK safely
 try:
     from google import genai
     GENAI_AVAILABLE = True
 except ModuleNotFoundError:
     GENAI_AVAILABLE = False
+
+# ------------------------------------------------------------------
+# 1. GNOSTIC ILLUMINATED DARK THEME CONFIGURATION (CSS)
+# ------------------------------------------------------------------
 st.set_page_config(
     page_title="ERIN: Noospheric Signal Engine",
     page_icon="📜",
@@ -82,11 +87,14 @@ with st.sidebar:
     
     client = None
     if gemini_api_key:
-        try:
-            client = genai.Client(api_key=gemini_api_key)
-            st.success("AI Neural Link Active")
-        except Exception as e:
-            st.error(f"Initialization Error: {e}")
+        if GENAI_AVAILABLE:
+            try:
+                client = genai.Client(api_key=gemini_api_key)
+                st.success("AI Neural Link Active")
+            except Exception as e:
+                st.error(f"Initialization Error: {e}")
+        else:
+            st.error("The `google-genai` package is installing on Streamlit Cloud. Please reboot your app via Manage App menu.")
     else:
         st.info("Operating in Rule-Based Fallback Mode. Enter a Gemini API Key above for full generative AI insights.")
 

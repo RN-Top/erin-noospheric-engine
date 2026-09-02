@@ -3,6 +3,7 @@ import pandas as pd
 import pydeck as pdk
 import requests
 import math
+import google.generativeai as genai
 
 # ------------------------------------------------------------------
 # 1. GNOSTIC ILLUMINATED DARK THEME CONFIGURATION (CSS)
@@ -11,7 +12,7 @@ st.set_page_config(
     page_title="ERIN: Noospheric Signal Engine",
     page_icon="📜",
     layout="wide",
-    initial_sidebar_state="collapsed"
+    initial_sidebar_state="expanded"
 )
 
 st.markdown("""
@@ -69,13 +70,75 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-st.title("📜 ERIN: NOOSPHERIC SIGNAL ENGINE")
-st.markdown("*Planetary Brain Mapping | Flower of Life Geometry | Tree of Life Paths*")
+# ------------------------------------------------------------------
+# 2. SIDEBAR: AI INTERPRETER & GEMINI API CONFIGURATION
+# ------------------------------------------------------------------
+with st.sidebar:
+    st.header("🔮 AI Noospheric Interpreter")
+    st.markdown("Connect an API key to enable live conversational explanations of telemetry, sacred geometry, and linguistic signals.")
+    
+    gemini_api_key = st.text_input("Google Gemini API Key", type="password", help="Get a free key from Google AI Studio")
+    
+    if gemini_api_key:
+        genai.configure(api_key=gemini_api_key)
+        st.success("AI Neural Link Active")
+    else:
+        st.info("Operating in Rule-Based Fallback Mode. Enter a Gemini API Key above for full generative AI insights.")
+
+    st.markdown("---")
+    st.subheader("💬 Ask ERIN AI")
+    
+    if "chat_history" not in st.session_state:
+        st.session_state.chat_history = []
+
+    user_query = st.text_input("Ask a question about the grid:")
+    if st.button("Send Query"):
+        if user_query:
+            st.session_state.chat_history.append(("User", user_query))
+            if gemini_api_key:
+                try:
+                    model = genai.GenerativeModel('gemini-1.5-flash')
+                    prompt = f"""
+                    You are ERIN, an AI Noospheric Signal Engine. You interpret planetary geography mapped to human brain anatomy,
+                    the Tree of Life, Flower of Life, and telemetry data. Answer the following user question in an authoritative,
+                    illuminated, and clear architectural tone: {user_query}
+                    """
+                    response = model.generate_content(prompt)
+                    st.session_state.chat_history.append(("ERIN AI", response.text))
+                except Exception as e:
+                    st.session_state.chat_history.append(("ERIN AI", f"Error generating response: {e}"))
+            else:
+                st.session_state.chat_history.append((
+                    "ERIN AI", 
+                    "To receive custom AI explanations, please enter a valid Google Gemini API key at the top of the sidebar."
+                ))
+
+    # Display Chat History
+    for role, text in reversed(st.session_state.chat_history):
+        st.markdown(f"**{role}:** {text}")
 
 # ------------------------------------------------------------------
-# 2. GEOSPATIAL MAP DATA & SACRED GEOMETRY OVERLAYS
+# 3. MAIN DASHBOARD HEADER & CODEX
 # ------------------------------------------------------------------
-# A. Node Anchors (Sephirot / Neural Hubs)
+st.title("📜 ERIN: NOOSPHERIC SIGNAL ENGINE")
+st.markdown("*Planetary Brain Mapping | Sacred Geometry Overlay | Macro-Cognitive Telemetry*")
+
+with st.expander("📖 ABOUT ERIN: System Codex & Architectural Insight", expanded=False):
+    st.markdown("""
+    **ERIN (Noospheric Signal Engine)** is a macro-cognitive lens designed to map global planetary structures onto human neural geography and sacred geometric matrices. 
+    
+    * **3D Planetary Brain Map:** Correlates geographic continental masses to neural structures (e.g., North America as the Left Frontal Lobe, Eurasia as the Right Frontal Lobe, and Egypt as the Central Thalamic Relay Hub).
+    * **Tree & Flower of Life Layers:** Visualizes geometric pathways (Tree of Life Sephirotic channels) and intersecting harmonic rings (Flower of Life) anchoring global consciousness to physical geography.
+    * **Live Planetary Telemetry:** Continuously queries the USGS Earthquake API across 9 major global Sephirotic nodes to measure real-time physical crustal activity.
+    * **Linguistic Spectrum Parser:** Translates arbitrary human language strings into OFDMA Wi-Fi 6 channels ($C1 \\rightarrow C8$), determining whether an intent represents an **Open Passage** (`-IN`/`-N`), a **Closed Boundary** (`-O`), or a **Neutral Baseline**.
+    * **Doubled-Fibonacci Modeler:** Calculates sequence progression using $F(n) = 2 \\cdot \\text{FIB}_n$, tracking alignment toward the divine target equilibrium of **42**.
+    """)
+
+st.markdown("---")
+
+# ------------------------------------------------------------------
+# 4. GEOSPATIAL MAP DATA & SACRED GEOMETRY OVERLAYS
+# ------------------------------------------------------------------
 nodes_data = pd.DataFrame([
     {"name": "Pineal / Epithalamus (Kether)", "lat": 31.76, "lon": 35.21, "region": "Jerusalem", "function": "Crown / Spiritual Perception Node", "type": "Crown Pillar"},
     {"name": "Left Frontal Lobe (Binah)", "lat": 40.0, "lon": -100.0, "region": "North America", "function": "Understanding / Analytical Logic", "type": "Left Pillar"},
@@ -88,42 +151,26 @@ nodes_data = pd.DataFrame([
     {"name": "Serpent Head Node (Da'at Gate)", "lat": 60.0, "lon": -170.0, "region": "Bering Sea", "function": "Hidden Knowledge / Seismic Trigger", "type": "Signal Anchor"}
 ])
 
-# B. Tree of Life Pathways (Connecting Sephirotic Planetary Nodes)
 tree_paths = [
-    # Middle Pillar: Kether -> Tiphereth -> Yesod -> Malkuth
     {"path": [[35.21, 31.76], [30.0, 26.0]], "name": "Path 1: Crown to Relay"},
     {"path": [[30.0, 26.0], [20.0, 0.0]], "name": "Path 2: Relay to Foundation"},
     {"path": [[20.0, 0.0], [0.0, -75.0]], "name": "Path 3: Foundation to Base"},
-    # Upper Triangle: Binah <-> Kether <-> Chokmah
     {"path": [[-100.0, 40.0], [35.21, 31.76]], "name": "Path 4: Binah to Kether"},
     {"path": [[35.21, 31.76], [100.0, 35.0]], "name": "Path 5: Kether to Chokmah"},
     {"path": [[-100.0, 40.0], [100.0, 35.0]], "name": "Path 6: Horizontal Upper Axis"},
-    # Cross Pathways to Central Tiphereth (Egypt Hub)
     {"path": [[-100.0, 40.0], [30.0, 26.0]], "name": "Path 7: Binah to Tiphereth"},
     {"path": [[100.0, 35.0], [30.0, 26.0]], "name": "Path 8: Chokmah to Tiphereth"},
-    # Lower Pillars: Gevurah <-> Tiphereth <-> Chesed
     {"path": [[-60.0, -15.0], [30.0, 26.0]], "name": "Path 9: Gevurah to Tiphereth"},
     {"path": [[135.0, -25.0], [30.0, 26.0]], "name": "Path 10: Chesed to Tiphereth"},
     {"path": [[-60.0, -15.0], [20.0, 0.0]], "name": "Path 11: Gevurah to Yesod"},
     {"path": [[135.0, -25.0], [20.0, 0.0]], "name": "Path 12: Chesed to Yesod"},
-    # Serpent Head Anchor Gate
     {"path": [[-170.0, 60.0], [35.21, 31.76]], "name": "Path 13: Da'at Trigger to Crown"}
 ]
-
 tree_df = pd.DataFrame(tree_paths)
 
-# C. Flower of Life Geometry Generator (Intersecting Concentric Spheric Rings)
 flower_circles = []
-centers = [
-    (30.0, 26.0),    # Egypt Hub Center
-    (35.21, 31.76),  # Jerusalem
-    (15.0, 54.0),    # Europe
-    (20.0, 0.0),     # Africa
-    (-100.0, 40.0),  # North America
-    (100.0, 35.0)    # Asia
-]
-
-radius_deg = 22.0  # Radius in geographical degrees
+centers = [(30.0, 26.0), (35.21, 31.76), (15.0, 54.0), (20.0, 0.0), (-100.0, 40.0), (100.0, 35.0)]
+radius_deg = 22.0
 
 for cx, cy in centers:
     points = []
@@ -137,7 +184,7 @@ for cx, cy in centers:
 flower_df = pd.DataFrame(flower_circles)
 
 # ------------------------------------------------------------------
-# 3. PYDECK MULTI-LAYER MAP RENDERING
+# 5. PYDECK MAP RENDERING
 # ------------------------------------------------------------------
 scatter_layer = pdk.Layer(
     "ScatterplotLayer",
@@ -167,12 +214,7 @@ flower_layer = pdk.Layer(
     pickable=False
 )
 
-view_state = pdk.ViewState(
-    latitude=20.0,
-    longitude=0.0,
-    zoom=1.2,
-    pitch=30
-)
+view_state = pdk.ViewState(latitude=20.0, longitude=0.0, zoom=1.2, pitch=30)
 
 st.subheader("Planetary Brain, Tree of Life & Flower of Life Grid")
 st.pydeck_chart(pdk.Deck(
@@ -185,61 +227,56 @@ st.pydeck_chart(pdk.Deck(
 st.markdown("---")
 
 # ------------------------------------------------------------------
-# 4. INTERACTIVE TELEMETRY & NOOSPHERIC LINGUISTIC ENGINE
+# 6. EXPANDED MULTI-NODE TELEMETRY & LINGUISTIC ENGINE
 # ------------------------------------------------------------------
 col1, col2 = st.columns(2)
 
 with col1:
-    st.subheader("Global Telemetry Monitor")
+    st.subheader("Global Telemetry Monitor (9 Sephirotic Hubs)")
     
-    selected_node = st.selectbox(
-        "Select Node Target",
-        ["Bering Sea Node (Da'at Gate)", "Egypt Node (Tiphereth Relay)", "Jerusalem Node (Kether)"]
-    )
-
     node_bounds = {
-        "Bering Sea Node (Da'at Gate)": {"minlat": 50, "maxlat": 66, "minlon": -180, "maxlon": -160},
-        "Egypt Node (Tiphereth Relay)": {"minlat": 20, "maxlat": 32, "minlon": 25, "maxlon": 36},
-        "Jerusalem Node (Kether)": {"minlat": 29, "maxlat": 33, "minlon": 34, "maxlon": 36}
+        "Jerusalem Node (Kether)": {"minlat": 29, "maxlat": 33, "minlon": 34, "maxlon": 36},
+        "North America Node (Binah)": {"minlat": 30, "maxlat": 50, "minlon": -120, "maxlon": -80},
+        "Asia Node (Chokmah)": {"minlat": 20, "maxlat": 45, "minlon": 80, "maxlon": 120},
+        "Egypt Relay Hub (Tiphereth)": {"minlat": 20, "maxlat": 32, "minlon": 25, "maxlon": 36},
+        "South America Node (Gevurah)": {"minlat": -30, "maxlat": 0, "minlon": -80, "maxlon": -40},
+        "Australia Node (Chesed)": {"minlat": -40, "maxlat": -10, "minlon": 110, "maxlon": 155},
+        "Africa Node (Yesod)": {"minlat": -10, "maxlat": 15, "minlon": 10, "maxlon": 35},
+        "Antarctica Base (Malkuth)": {"minlat": -85, "maxlat": -60, "minlon": -180, "maxlon": 180},
+        "Bering Sea Node (Da'at Gate)": {"minlat": 50, "maxlat": 66, "minlon": -180, "maxlon": -160}
     }
     
-    if st.button("Query USGS Node Data"):
+    selected_node = st.selectbox("Select Target Sephirotic Node", list(node_bounds.keys()))
+    
+    if st.button("Poll Live Node Telemetry"):
         bounds = node_bounds[selected_node]
         url = (
             f"https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson"
             f"&minlatitude={bounds['minlat']}&maxlatitude={bounds['maxlat']}"
             f"&minlongitude={bounds['minlon']}&maxlongitude={bounds['maxlon']}"
-            f"&minmagnitude=2.5&limit=1"
+            f"&minmagnitude=2.0&limit=1"
         )
         try:
             res = requests.get(url, timeout=5).json()
             features = res.get('features', [])
             if features:
                 props = features[0]['properties']
-                st.success(f"Seismic Event Registered: {props['place']}")
-                st.metric(label="Magnitude", value=props['mag'])
+                st.success(f"Seismic Activity Registered: {props['place']}")
+                st.metric(label="Magnitude (M)", value=props['mag'])
             else:
-                st.info(f"No major seismic events (>2.5 M) detected at {selected_node}.")
-                st.metric(label="Grid State", value="Equilibrium")
+                st.info(f"No active seismic triggers detected at {selected_node}.")
+                st.metric(label="Node Energy Level", value="Quiescent")
         except Exception as e:
-            st.error(f"Telemetry Fetch Error: {e}")
+            st.error(f"Telemetry Network Error: {e}")
 
 with col2:
     st.subheader("Linguistic Passage & AI Interpreter")
     user_input = st.text_input("Input Intent or Word Stream", value="ERIN")
     
-    def generate_noospheric_insight(word, channel, dynamic):
-        insights = {
-            "OPEN PASSAGE": f"Signal '{word}' resonates as an unconstrained vector on Spectrum Channel C{channel}. Energy flows outward through the Middle Pillar without friction.",
-            "CLOSED BOUNDARY": f"Signal '{word}' forms a localized containment shell on Spectrum Channel C{channel}. Structural energy remains anchored within the designated grid limits.",
-            "NEUTRAL STATE": f"Signal '{word}' maintains a neutral harmonic baseline on Spectrum Channel C{channel}. System equilibrium is active."
-        }
-        return insights.get(dynamic, "Signal state oscillating.")
-
     if user_input:
         word = user_input.strip().upper()
         channel = min(8, max(1, len(word) % 9))
-        st.markdown(f"**OFDMA Allocation:** Spectrum Channel **C{channel}**")
+        st.markdown(f"**OFDMA Channel:** **C{channel}**")
         
         if word.endswith("IN") or word.endswith("N"):
             dynamic = "OPEN PASSAGE"
@@ -251,15 +288,25 @@ with col2:
             dynamic = "NEUTRAL STATE"
             st.warning(f"**Terminal Dynamic:** [{word}] → **NEUTRAL STATE**")
             
-        st.markdown(f"> **AI Signal Interpretation:** *{generate_noospheric_insight(word, channel, dynamic)}*")
+        # Generative AI dynamic insight generation
+        if gemini_api_key:
+            try:
+                model = genai.GenerativeModel('gemini-1.5-flash')
+                ai_prompt = f"In 2 brief sentences, interpret the word '{word}' assigned to spectrum C{channel} with dynamic '{dynamic}' within a cybernetic noospheric planetary grid context."
+                ai_response = model.generate_content(ai_prompt).text
+                st.markdown(f"> **AI Generative Analysis:** *{ai_response}*")
+            except Exception:
+                st.markdown(f"> **AI Insight:** *Signal '{word}' resonates as a {dynamic} state across Spectrum Channel C{channel}.*")
+        else:
+            st.markdown(f"> **Fallback Insight:** *Signal '{word}' acts as a {dynamic} vector on Spectrum Channel C{channel}.*")
 
 st.markdown("---")
 
 # ------------------------------------------------------------------
-# 5. HARMONIC FIBONACCI CYCLE (Target: 42)
+# 7. HARMONIC FIBONACCI CYCLE (Target: 42)
 # ------------------------------------------------------------------
 st.subheader("Doubled-Fibonacci Harmonic Modeler")
-st.markdown("Formula: $F(n) = 2 \\cdot \\text{FIB}_n$ (Mirroring dual counterpart dynamics)")
+st.markdown("Formula: $F(n) = 2 \\cdot \\text{FIB}_n$ (Tracking alignment toward divine equilibrium)")
 
 harmonic_step = st.slider("Select Sequence Index Step (N)", 0, 8, 7)
 

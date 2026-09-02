@@ -1,12 +1,42 @@
-# Python environment files
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
-*.so
-.Python
-env/
-venv/
-ENV/
 
-# Streamlit config
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Streamlit local runtime configs & secrets
 .streamlit/
+!.streamlit/config.toml
+
+# IDEs & System files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

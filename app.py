@@ -139,7 +139,6 @@ flower_df = pd.DataFrame(flower_circles)
 # ------------------------------------------------------------------
 # 3. PYDECK MULTI-LAYER MAP RENDERING
 # ------------------------------------------------------------------
-# 1. Sephirot Node Points
 scatter_layer = pdk.Layer(
     "ScatterplotLayer",
     data=nodes_data,
@@ -150,7 +149,6 @@ scatter_layer = pdk.Layer(
     auto_highlight=True
 )
 
-# 2. Tree of Life Paths (Glowing Golden Channels)
 tree_layer = pdk.Layer(
     "PathLayer",
     data=tree_df,
@@ -160,7 +158,6 @@ tree_layer = pdk.Layer(
     pickable=True
 )
 
-# 3. Flower of Life Geometric Grid (Parchment Luminous Rings)
 flower_layer = pdk.Layer(
     "PathLayer",
     data=flower_df,
@@ -188,19 +185,31 @@ st.pydeck_chart(pdk.Deck(
 st.markdown("---")
 
 # ------------------------------------------------------------------
-# 4. INTERACTIVE TELEMETRY & LINGUISTIC ENGINE
+# 4. INTERACTIVE TELEMETRY & NOOSPHERIC LINGUISTIC ENGINE
 # ------------------------------------------------------------------
 col1, col2 = st.columns(2)
 
 with col1:
-    st.subheader("Bering Sea Telemetry")
-    st.markdown("Focal Anchor: **Serpent Head Convergence (Da'at Gate)**")
+    st.subheader("Global Telemetry Monitor")
+    
+    selected_node = st.selectbox(
+        "Select Node Target",
+        ["Bering Sea Node (Da'at Gate)", "Egypt Node (Tiphereth Relay)", "Jerusalem Node (Kether)"]
+    )
+
+    node_bounds = {
+        "Bering Sea Node (Da'at Gate)": {"minlat": 50, "maxlat": 66, "minlon": -180, "maxlon": -160},
+        "Egypt Node (Tiphereth Relay)": {"minlat": 20, "maxlat": 32, "minlon": 25, "maxlon": 36},
+        "Jerusalem Node (Kether)": {"minlat": 29, "maxlat": 33, "minlon": 34, "maxlon": 36}
+    }
     
     if st.button("Query USGS Node Data"):
+        bounds = node_bounds[selected_node]
         url = (
-            "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson"
-            "&minlatitude=50&maxlatitude=66&minlongitude=-180&maxlongitude=-160"
-            "&minmagnitude=2.5&limit=1"
+            f"https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson"
+            f"&minlatitude={bounds['minlat']}&maxlatitude={bounds['maxlat']}"
+            f"&minlongitude={bounds['minlon']}&maxlongitude={bounds['maxlon']}"
+            f"&minmagnitude=2.5&limit=1"
         )
         try:
             res = requests.get(url, timeout=5).json()
@@ -210,28 +219,39 @@ with col1:
                 st.success(f"Seismic Event Registered: {props['place']}")
                 st.metric(label="Magnitude", value=props['mag'])
             else:
-                st.info("No major seismic events (>2.5 M) detected at Bering Sea Node.")
+                st.info(f"No major seismic events (>2.5 M) detected at {selected_node}.")
                 st.metric(label="Grid State", value="Equilibrium")
         except Exception as e:
             st.error(f"Telemetry Fetch Error: {e}")
 
 with col2:
-    st.subheader("Linguistic Passage Parser")
+    st.subheader("Linguistic Passage & AI Interpreter")
     user_input = st.text_input("Input Intent or Word Stream", value="ERIN")
     
+    def generate_noospheric_insight(word, channel, dynamic):
+        insights = {
+            "OPEN PASSAGE": f"Signal '{word}' resonates as an unconstrained vector on Spectrum Channel C{channel}. Energy flows outward through the Middle Pillar without friction.",
+            "CLOSED BOUNDARY": f"Signal '{word}' forms a localized containment shell on Spectrum Channel C{channel}. Structural energy remains anchored within the designated grid limits.",
+            "NEUTRAL STATE": f"Signal '{word}' maintains a neutral harmonic baseline on Spectrum Channel C{channel}. System equilibrium is active."
+        }
+        return insights.get(dynamic, "Signal state oscillating.")
+
     if user_input:
         word = user_input.strip().upper()
         channel = min(8, max(1, len(word) % 9))
         st.markdown(f"**OFDMA Allocation:** Spectrum Channel **C{channel}**")
         
         if word.endswith("IN") or word.endswith("N"):
+            dynamic = "OPEN PASSAGE"
             st.success(f"**Terminal Dynamic:** [{word}] → **OPEN PASSAGE**")
-            st.caption("Identity remains in continuous motion across layers (Identity → Passage).")
         elif word.endswith("O"):
+            dynamic = "CLOSED BOUNDARY"
             st.error(f"**Terminal Dynamic:** [{word}] → **CLOSED BOUNDARY**")
-            st.caption("Identity state is finalized and enclosed within limits.")
         else:
+            dynamic = "NEUTRAL STATE"
             st.warning(f"**Terminal Dynamic:** [{word}] → **NEUTRAL STATE**")
+            
+        st.markdown(f"> **AI Signal Interpretation:** *{generate_noospheric_insight(word, channel, dynamic)}*")
 
 st.markdown("---")
 

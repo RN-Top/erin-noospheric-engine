@@ -4,6 +4,18 @@ import pydeck as pdk
 import requests
 import math
 
+# Safe import block
+try:
+    from google import genai
+    GENAI_AVAILABLE = True
+except ModuleNotFoundError:
+    GENAI_AVAILABLE = False
+import streamlit as st
+import pandas as pd
+import pydeck as pdk
+import requests
+import math
+
 # Try importing the Google GenAI SDK safely
 try:
     from google import genai

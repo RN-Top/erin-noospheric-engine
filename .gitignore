@@ -1,17 +1,25 @@
-# Byte-compiled files
+# Python bytecode & cache
 __pycache__/
 *.py[cod]
 *$py.class
 
-# Environments
+# Virtual environments
 venv/
 env/
 ENV/
+.venv/
 
-# Streamlit config and secrets
+# Environment variables & secrets (API keys)
+.env
+.streamlit/secrets.toml
+
+# Streamlit local runtime files
 .streamlit/
-!.streamlit/config.toml
 
-# System files
+# OS-generated files
 .DS_Store
 Thumbs.db
+
+# IDE configuration files
+.vscode/
+.idea/

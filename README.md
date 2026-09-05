@@ -1,26 +1,30 @@
-# 📜 ERIN: Noospheric Signal Engine
+# 🧠 Noospheric Signal Engine (ERIN)
 
-**ERIN: Noospheric Signal Engine** is an interactive, real-time web application designed to map planetary geography to macro-neural structures and sacred geometric frameworks. Functioning as a macro-cognitive lens, the system grounds complex global telemetry and linguistic input directly back to the central perspective of the **Observer**.
-
----
-
-## 🌟 Key Features
-
-* **3D Planetary Brain Mapping:** Correlates geographic continental masses to neural counterparts (Americas as Left Brain, Eurasia as Right Brain, Egypt as Central Thalamic Relay Node).
-* **Sacred Geometry Engine:** Renders dynamic 3D **Tree of Life** pathways and multi-ring **Flower of Life** overlays over a dark-themed world map via PyDeck.
-* **9-Node Live Telemetry:** Queries the USGS Earthquake API across all 9 Sephirotic global nodes in real time.
-* **Linguistic Passage & AI Interpreter:** Maps word streams into Wi-Fi 6 OFDMA channels ($C1 \rightarrow C8$), evaluates terminal dynamic states (Open Passage vs. Closed Boundary), and outputs dynamic AI insights using Google Gemini.
-* **Interactive AI Chatbot:** Features an integrated sidebar assistant to explain grid telemetry, node functions, and underlying mathematics in real time.
-* **Doubled-Fibonacci Modeler:** Tracks harmonic sequence progression toward the target divine equilibrium of **42**.
+An interactive Streamlit visualizer and cybernetic modeling tool that maps human cerebral anatomy onto global geographical coordinates, sacred geometric matrices, and high-frequency signal spectrums.
 
 ---
 
-## 🛠️ Repository Structure
+### 📌 Overview
+
+The **Noospheric Signal Engine** provides a macro-cognitive lens for exploring planetary-scale neural networks. By mapping the biological human brain directly onto continental landmasses and sacred geographic nodes, the engine computes real-time signal pathways, acoustic dynamics, and dynamic sequence progressions toward divine equilibrium.
+
+---
+
+### 🛠️ Key Features
+
+* **3D Cortical Projection Surface:** Projects major cerebral structures (e.g., Thalamus, Prefrontal Cortex, Brainstem) onto global coordinates using interactive 3D ellipsoid surfaces via Plotly.
+* **Geographic Node & Pathway Mapping:** High-contrast PyDeck visualization layering the Tree of Life pathways and Flower of Life harmonic rings over global map coordinates.
+* **Live Telemetry Monitoring:** Connects directly to the USGS Earthquake API across 9 Sephirotic global nodes to measure live crustal energy and seismic activity.
+* **Phonetic Signal & Passage Parser:** Evaluates intent and word streams (e.g., *Erin*, *Seven*, *Dren*) to determine OFDMA Resource Unit allocations (C1–C8) and open/closed terminal dynamics.
+* **Doubled-Fibonacci Modeler:** Calculates sequence progression using $F(n) = 2 \cdot \text{FIB}_n$, tracking mathematical alignment toward the equilibrium target of **42**.
+* **AI Noospheric Interpreter:** Optional integration with the Google Gemini API (`google-genai` SDK) for generative conversational analysis and real-time concept decoding.
+
+---
+
+### 📂 Repository Structure
 
 ```text
-erin-noospheric-engine/
-│
-├── app.py             # Main Streamlit & PyDeck application
-├── requirements.txt   # Python package dependencies
-├── .gitignore         # Version control exclusion rules
-└── README.md          # Project documentation
+├── app.py              # Main Streamlit dashboard application
+├── requirements.txt    # Python library dependencies
+├── .gitignore          # Environment and local file exclusion rules
+└── README.md           # Project documentation

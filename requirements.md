@@ -1,5 +1,6 @@
 streamlit
 pandas
 pydeck
+numpy
+plotly
 requests
-google-genai
